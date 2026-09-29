@@ -99,7 +99,7 @@ body {
 @media print {
   @page { size: A4 portrait; margin: 0; }
   html  { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  body  { width: 800px !important; max-width: 800px !important; padding: 0 14mm !important; margin: 0 !important; }
+  body  { width: 800px !important; max-width: 800px !important; padding: 6mm 0 !important; margin: 0 !important; }
   .ag-wrap      { grid-template-columns: 1fr 170px !important; }
   .results-grid { grid-template-columns: 1fr 1fr !important; }
   .bar  { display: none; }
