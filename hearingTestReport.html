@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>청력 종합 검사 결과 보고서</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="bar">
+  <input type="file" id="file-input" accept=".json" style="display:none">
+  <button class="btn" onclick="document.getElementById('file-input').click()">불러오기</button>
+</div>
+
+<div id="report">
+  <div id="report-content">
+
+    <!-- 헤더 -->
+    <div class="page-header">
+      <div class="report-header">
+        <div class="report-title">청력 종합 검사 결과 보고서</div>
+      </div>
+      <img src="images/logo_withhear.svg" class="header-logo">
+    </div>
+
+    <!-- 환자 정보 -->
+    <div class="patient-info">
+      <span>이름 : <strong id="p-name"></strong> (<span id="p-age"></span>세, <span id="p-gender"></span>)</span>
+      <span>검사일 : <span id="m-date"></span></span>
+    </div>
+
+    <!-- 청력도 + 범례 -->
+    <div class="section">
+      <div class="ag-wrap">
+        <div class="ag-graph">
+          <div class="section-title">청력도</div>
+          <svg id="ag" width="480" height="480" xmlns="http://www.w3.org/2000/svg"></svg>
+        </div>
+        <div class="ag-side">
+          <table class="legend-tbl">
+            <thead>
+              <tr><th>범례</th><th>L</th><th>R</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>기도</td>
+                <td><img src="images/sym_ac_L.svg"      width="16" height="16"></td>
+                <td><img src="images/sym_ac_R.svg"      width="16" height="16"></td></tr>
+              <tr><td>기도 무반응</td>
+                <td><img src="images/sym_ac_L_nr.svg"   width="16" height="16"></td>
+                <td><img src="images/sym_ac_R_nr.svg"   width="16" height="16"></td></tr>
+              <tr><td>기도차폐</td>
+                <td><img src="images/sym_ac_L_m.svg"    width="16" height="16"></td>
+                <td><img src="images/sym_ac_R_m.svg"    width="16" height="16"></td></tr>
+              <tr><td>기도차폐 무반응</td>
+                <td><img src="images/sym_ac_L_m_nr.svg" width="16" height="16"></td>
+                <td><img src="images/sym_ac_R_m_nr.svg" width="16" height="16"></td></tr>
+              <tr><td>골도</td>
+                <td><img src="images/sym_bc_L.svg"      width="16" height="16"></td>
+                <td><img src="images/sym_bc_R.svg"      width="16" height="16"></td></tr>
+              <tr><td>골도 무반응</td>
+                <td><img src="images/sym_bc_L_nr.svg"   width="16" height="16"></td>
+                <td><img src="images/sym_bc_R_nr.svg"   width="16" height="16"></td></tr>
+              <tr><td>골도차폐</td>
+                <td><img src="images/sym_bc_L_m.svg"    width="16" height="16"></td>
+                <td><img src="images/sym_bc_R_m.svg"    width="16" height="16"></td></tr>
+              <tr><td>골도차폐 무반응</td>
+                <td><img src="images/sym_bc_L_m_nr.svg" width="16" height="16"></td>
+                <td><img src="images/sym_bc_R_m_nr.svg" width="16" height="16"></td></tr>
+            </tbody>
+          </table>
+          <table class="deg-tbl">
+            <!-- <tr><td class="h" colspan="2">난청 정도 기준</td></tr> -->
+            <tr><td>~ 20 dB</td><td>정상</td></tr>
+            <tr><td>21 ~ 34</td><td>경도</td></tr>
+            <tr><td>35 ~ 49</td><td>중등도</td></tr>
+            <tr><td>50 ~ 64</td><td>중고도</td></tr>
+            <tr><td>65 ~ 79</td><td>고도</td></tr>
+            <tr><td>80 ~ 94</td><td>심도</td></tr>
+            <tr><td>95 ~</td><td>완전/농</td></tr>
+          </table>
+          <table class="ag-meta">
+            <tr><td class="meta-lbl">검사 버전</td><td id="m-ver"></td></tr>
+            <tr><td class="meta-lbl">주변소음</td><td id="m-noise"></td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- 순음 청력 검사 결과 -->
+    <div class="section">
+      <div class="results-grid">
+        <div class="result-box result-L">
+          <div class="result-top">
+            <div class="result-ear result-ear--L">왼쪽</div>
+            <div class="result-stats">
+              <div class="stat-row"><span>기도 평균 역치</span><strong id="l-ac-avg"></strong></div>
+              <div class="stat-row"><span>골도 평균 역치</span><strong id="l-bc-avg"></strong></div>
+              <div class="stat-row"><span>소음 속 숫자 듣기</span><strong id="l-noise"></strong></div>
+              <div class="stat-row"><span>난청 정도</span><strong id="l-degree"></strong></div>
+            </div>
+          </div>
+          <div class="result-desc" id="l-desc"></div>
+        </div>
+        <div class="result-box result-R">
+          <div class="result-top">
+            <div class="result-ear result-ear--R">오른쪽</div>
+            <div class="result-stats">
+              <div class="stat-row"><span>기도 평균 역치</span><strong id="r-ac-avg"></strong></div>
+              <div class="stat-row"><span>골도 평균 역치</span><strong id="r-bc-avg"></strong></div>
+              <div class="stat-row"><span>소음 속 숫자 듣기</span><strong id="r-noise"></strong></div>
+              <div class="stat-row"><span>난청 정도</span><strong id="r-degree"></strong></div>
+            </div>
+          </div>
+          <div class="result-desc" id="r-desc"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 설문 검사 결과 -->
+    <div class="section">
+      <div class="survey-box">
+        <div class="section-title">설문 검사 결과</div>
+        <p class="survey-text" id="survey"></p>
+      </div>
+    </div>
+
+    <!-- 푸터 -->
+    <div class="report-footer">
+      <div class="disc">
+        <p>※ 본 검사는 의사의 진단을 대체할 수 없으며, 질병의 임상적인 모니터링, 치료 또는 완화를 목적으로 사용할 수 없습니다.</p>
+        <p>※ 일부 구간에 저차폐(Undermasking) 가능성이 있어 결과 해석에 주의가 필요합니다.</p>
+      </div>
+      <div class="logo-audiso-wrap">
+        <img src="images/logo_audiso.svg" class="logo-audiso">
+        <p class="logo-url">www.audiso.co.kr</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+const FREQS = [125, 250, 500, 1000, 2000, 3000, 4000, 6000, 8000, 12000];
+const FLBL  = ['','250','500','1K','2K','3K','4K','6K','8K',''];
+
+const SERIES_CFG = [
+  { key: 'ac_L',    sym: 'sym_ac_L',    dash: [],     color: '#2C6FFF' },
+  { key: 'ac_R',    sym: 'sym_ac_R',    dash: [],     color: '#D42A2A' },
+  { key: 'ac_L_m',  sym: 'sym_ac_L_m',  dash: [],     color: '#2C6FFF' },
+  { key: 'ac_R_m',  sym: 'sym_ac_R_m',  dash: [],     color: '#D42A2A' },
+  { key: 'bc_L',    sym: 'sym_bc_L',    dash: [4, 3], color: '#2C6FFF' },
+  { key: 'bc_R',    sym: 'sym_bc_R',    dash: [4, 3], color: '#D42A2A' },
+  { key: 'bc_L_m',  sym: 'sym_bc_L_m',  dash: [4, 3], color: '#2C6FFF' },
+  { key: 'bc_R_m',  sym: 'sym_bc_R_m',  dash: [4, 3], color: '#D42A2A' },
+  { key: 'ac_L_nr',   sym: 'sym_ac_L_nr',   dash: [], color: '#2C6FFF', noLine: true },
+  { key: 'ac_R_nr',   sym: 'sym_ac_R_nr',   dash: [], color: '#D42A2A', noLine: true },
+  { key: 'ac_L_m_nr', sym: 'sym_ac_L_m_nr', dash: [], color: '#2C6FFF', noLine: true },
+  { key: 'ac_R_m_nr', sym: 'sym_ac_R_m_nr', dash: [], color: '#D42A2A', noLine: true },
+  { key: 'bc_L_nr',   sym: 'sym_bc_L_nr',   dash: [], color: '#2C6FFF', noLine: true },
+  { key: 'bc_R_nr',   sym: 'sym_bc_R_nr',   dash: [], color: '#D42A2A', noLine: true },
+  { key: 'bc_L_m_nr', sym: 'sym_bc_L_m_nr', dash: [], color: '#2C6FFF', noLine: true },
+  { key: 'bc_R_m_nr', sym: 'sym_bc_R_m_nr', dash: [], color: '#D42A2A', noLine: true },
+];
+
+const ag = {};
+SERIES_CFG.forEach(s => { ag[s.key] = Array(FREQS.length).fill(null); });
+
+function drawAG() {
+  const svg = document.getElementById('ag');
+  const W = 480, H = 480;
+  const P = { t: 36, r: 18, b: 40, l: 48 };
+  const pw = W - P.l - P.r, ph = H - P.t - P.b;
+  const MIN = -10, MAX = 120, RNG = MAX - MIN;
+  const xs  = pw / (FREQS.length - 1);
+  const xOf = i  => P.l + i * xs;
+  const yOf = db => P.t + ((db - MIN) / RNG) * ph;
+  const f2  = n  => n.toFixed(2);
+
+  const el = [];
+
+  /* 배경 */
+  el.push(`<rect width="${W}" height="${H}" fill="white"/>`);
+
+  /* 수평 그리드 */
+  for (let db = MIN; db <= MAX; db += 10) {
+    const y = f2(yOf(db));
+    const stroke = db === 0 ? '#888' : '#ddd';
+    const sw     = 0.5;
+    el.push(`<line x1="${P.l}" y1="${y}" x2="${P.l + pw}" y2="${y}" stroke="${stroke}" stroke-width="${sw}"/>`);
+    el.push(`<text x="${P.l - 4}" y="${y}" text-anchor="end" dominant-baseline="middle" font-size="10" font-family="'Noto Sans KR', sans-serif">${db}</text>`);
+  }
+
+  /* 수직 그리드 + 주파수 레이블 */
+  FREQS.forEach((_, i) => {
+    const x = f2(xOf(i));
+    el.push(`<line x1="${x}" y1="${P.t}" x2="${x}" y2="${P.t + ph}" stroke="#ddd" stroke-width="0.5"/>`);
+    el.push(`<text x="${x}" y="${P.t - 5}" text-anchor="middle" font-size="10" font-weight="bold" font-family="'Noto Sans KR', sans-serif">${FLBL[i]}</text>`);
+  });
+
+  /* 테두리 */
+  el.push(`<rect x="${P.l}" y="${P.t}" width="${pw}" height="${ph}" fill="none" stroke="black" stroke-width="1"/>`);
+
+  /* 축 레이블 */
+  el.push(`<text transform="translate(${P.l + pw + 10},${f2(P.t + ph / 2)}) rotate(-90)" text-anchor="middle" dominant-baseline="middle" font-size="10" font-family="'Noto Sans KR', sans-serif">Hearing Level (dB HL)</text>`);
+  el.push(`<text x="${f2(P.l + pw / 2)}" y="${P.t + ph + 14}" text-anchor="middle" font-size="10" font-family="'Noto Sans KR', sans-serif">Frequency (Hz)</text>`);
+
+  const SYM_SIZE = 16;
+  const half = SYM_SIZE / 2;
+
+  SERIES_CFG.forEach(({ key, sym, dash, color, noLine }) => {
+    const pts = ag[key];
+    if (!pts.some(v => v != null)) return;
+
+    /* 연결선 */
+    if (!noLine) {
+      const dashAttr = dash.length ? ` stroke-dasharray="${dash.join(' ')}"` : '';
+      for (let i = 0; i < pts.length - 1; i++) {
+        if (pts[i] == null || pts[i + 1] == null) continue;
+        const x1 = xOf(i),     y1 = yOf(pts[i]);
+        const x2 = xOf(i + 1), y2 = yOf(pts[i + 1]);
+        const dx = x2 - x1,    dy = y2 - y1;
+        const dist = Math.hypot(dx, dy);
+        if (dist <= half * 2) continue;
+        const ux = dx / dist,  uy = dy / dist;
+        el.push(`<line x1="${f2(x1 + ux * half)}" y1="${f2(y1 + uy * half)}" x2="${f2(x2 - ux * half)}" y2="${f2(y2 - uy * half)}" stroke="${color}" stroke-width="1.5"${dashAttr}/>`);
+      }
+    }
+
+    /* 심볼 */
+    pts.forEach((v, i) => {
+      if (v == null) return;
+      el.push(`<image href="images/${sym}.svg" x="${f2(xOf(i) - half)}" y="${f2(yOf(v) - half)}" width="${SYM_SIZE}" height="${SYM_SIZE}"/>`);
+    });
+  });
+
+  svg.innerHTML = el.join('');
+}
+
+function applyData(d) {
+  if (!d) return;
+
+  const set = (id, text) => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = text ?? '';
+  };
+
+  const p = d.patient || {};
+  set('p-name',   p.name   ?? '');
+  set('p-gender', p.gender ?? '');
+  if (p.dob) {
+    const b = new Date(p.dob), n = new Date();
+    let age = n.getFullYear() - b.getFullYear();
+    if (n.getMonth() < b.getMonth() || (n.getMonth() === b.getMonth() && n.getDate() < b.getDate())) age--;
+    set('p-age', age);
+  }
+
+  if (d.audiogram) {
+    const readSeries = (key, fallback) => {
+      const arr = d.audiogram[key] || (fallback ? d.audiogram[fallback] : null) || [];
+      const result = arr.map(x => x ?? null);
+      while (result.length < FREQS.length) result.push(null);
+      return result;
+    };
+    ag.ac_L    = readSeries('ac_L',    'left');
+    ag.ac_R    = readSeries('ac_R',    'right');
+    ag.ac_L_m  = readSeries('ac_L_m',  null);
+    ag.ac_R_m  = readSeries('ac_R_m',  null);
+    ag.bc_L    = readSeries('bc_L',    null);
+    ag.bc_R    = readSeries('bc_R',    null);
+    ag.bc_L_m  = readSeries('bc_L_m',  null);
+    ag.bc_R_m  = readSeries('bc_R_m',  null);
+    ag.ac_L_nr   = readSeries('ac_L_nr',   null);
+    ag.ac_R_nr   = readSeries('ac_R_nr',   null);
+    ag.ac_L_m_nr = readSeries('ac_L_m_nr', null);
+    ag.ac_R_m_nr = readSeries('ac_R_m_nr', null);
+    ag.bc_L_nr   = readSeries('bc_L_nr',   null);
+    ag.bc_R_nr   = readSeries('bc_R_nr',   null);
+    ag.bc_L_m_nr = readSeries('bc_L_m_nr', null);
+    ag.bc_R_m_nr = readSeries('bc_R_m_nr', null);
+    drawAG();
+  }
+
+  const l = (d.puretonResults || {}).left  || {};
+  const r = (d.puretonResults || {}).right || {};
+  set('l-ac-avg',  l.acAvgThreshold ?? '');
+  set('l-bc-avg',  l.bcAvgThreshold ?? '');
+  set('l-noise',   l.noiseScore     ?? '');
+  set('l-degree',  l.degree         ?? '');
+  set('l-desc',    l.description    ?? '');
+  set('r-ac-avg',  r.acAvgThreshold ?? '');
+  set('r-bc-avg',  r.bcAvgThreshold ?? '');
+  set('r-noise',   r.noiseScore     ?? '');
+  set('r-degree',  r.degree         ?? '');
+  set('r-desc',    r.description    ?? '');
+
+  set('survey', d.survey ?? '');
+
+  const m = d.meta || {};
+  set('m-date',  m.testDate     ?? '');
+  set('m-ver',   m.version      ?? '');
+  set('m-noise', m.ambientNoise ?? '');
+}
+
+document.getElementById('file-input').addEventListener('change', function() {
+  const file = this.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    try { applyData(JSON.parse(e.target.result)); }
+    catch { alert('JSON 형식이 올바르지 않습니다.'); }
+  };
+  reader.readAsText(file);
+  this.value = '';
+});
+</script>
+</body>
+</html>
