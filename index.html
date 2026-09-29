@@ -9,8 +9,7 @@
 <body>
 
 <div class="bar">
-  <input type="file" id="file-input" accept=".json" style="display:none">
-  <button class="btn" onclick="document.getElementById('file-input').click()">불러오기</button>
+  <button class="btn" onclick="window.print()">PDF 저장</button>
 </div>
 
 <div id="report">
@@ -302,18 +301,6 @@ function applyData(d) {
   set('m-ver',   m.version      ?? '');
   set('m-noise', m.ambientNoise ?? '');
 }
-
-document.getElementById('file-input').addEventListener('change', function() {
-  const file = this.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = e => {
-    try { applyData(JSON.parse(e.target.result)); }
-    catch { alert('JSON 형식이 올바르지 않습니다.'); }
-  };
-  reader.readAsText(file);
-  this.value = '';
-});
 
 fetch('sampleData.json')
   .then(r => r.json())
