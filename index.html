@@ -9,7 +9,7 @@
 <body>
 
 <div class="bar">
-  <button class="btn" onclick="document.body.style.zoom='1';window.print()">PDF 저장</button>
+  <button class="btn" onclick="printFit()">PDF 저장</button>
 </div>
 
 <div id="report">
@@ -306,6 +306,23 @@ fetch('sampleData.json')
   .then(r => r.json())
   .then(applyData)
   .catch(() => {});
+
+function printFit() {
+  const viewport = document.querySelector('meta[name="viewport"]');
+  const originalViewport = viewport.getAttribute('content');
+  viewport.setAttribute('content', 'width=800');
+
+  setTimeout(() => {
+    const A4_H_PX = 1122;
+    const content = document.getElementById('report-content');
+    const h = content.scrollHeight;
+    const scale = h > A4_H_PX ? (A4_H_PX / h) : 1;
+    document.documentElement.style.zoom = scale;
+    window.print();
+    document.documentElement.style.zoom = '';
+    viewport.setAttribute('content', originalViewport);
+  }, 300);
+}
 </script>
 </body>
 </html>
