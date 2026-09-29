@@ -35,7 +35,7 @@
       <div class="ag-wrap">
         <div class="ag-graph">
           <div class="section-title">청력도</div>
-          <svg id="ag" width="480" height="480" xmlns="http://www.w3.org/2000/svg"></svg>
+          <svg id="ag" viewBox="0 0 480 480" xmlns="http://www.w3.org/2000/svg"></svg>
         </div>
         <div class="ag-side">
           <table class="legend-tbl">
@@ -168,8 +168,9 @@ SERIES_CFG.forEach(s => { ag[s.key] = Array(FREQS.length).fill(null); });
 
 function drawAG() {
   const svg = document.getElementById('ag');
-  const W = 480, H = 480;
-  const P = { t: 36, r: 18, b: 40, l: 48 };
+  const W = 480, H = 428;
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  const P = { t: 36, r: 18, b: 18, l: 48 };
   const pw = W - P.l - P.r, ph = H - P.t - P.b;
   const MIN = -10, MAX = 120, RNG = MAX - MIN;
   const xs  = pw / (FREQS.length - 1);
@@ -202,7 +203,7 @@ function drawAG() {
   el.push(`<rect x="${P.l}" y="${P.t}" width="${pw}" height="${ph}" fill="none" stroke="black" stroke-width="1"/>`);
 
   /* 축 레이블 */
-  el.push(`<text transform="translate(${P.l + pw + 10},${f2(P.t + ph / 2)}) rotate(-90)" text-anchor="middle" dominant-baseline="middle" font-size="10" font-family="'Noto Sans KR', sans-serif">Hearing Level (dB HL)</text>`);
+  el.push(`<text transform="translate(10,${f2(P.t + ph / 2)}) rotate(-90)" text-anchor="middle" dominant-baseline="middle" font-size="10" font-family="'Noto Sans KR', sans-serif">Hearing Level (dB HL)</text>`);
   el.push(`<text x="${f2(P.l + pw / 2)}" y="${P.t + ph + 14}" text-anchor="middle" font-size="10" font-family="'Noto Sans KR', sans-serif">Frequency (Hz)</text>`);
 
   const SYM_SIZE = 16;

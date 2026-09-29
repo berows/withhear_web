@@ -15,83 +15,83 @@
 body {
   font-family: 'Noto Sans KR', sans-serif;
   color: var(--color-dark); background: var(--color-white);
-  padding: 24px 20px; max-width: 800px; width: 100%;
+  padding: 14px 20px; max-width: 800px; width: 100%;
 }
 
 /* ── 헤더 ── */
-.page-header  { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 10px; }
-.report-header { background: var(--color-yellow); padding: 5px 20px; border-radius: 100px; }
+.page-header  { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 6px; }
+.report-header { background: var(--color-yellow); padding: 5px 20px; border-radius: 100px; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
 .report-title  { font-size: 20px; letter-spacing: -1px; font-weight: bold; color: var(--color-dark); }
 .header-logo   { height: 55px; width: auto; flex-shrink: 0; }
 
 /* ── 환자 정보 ── */
 .patient-info {
   display: flex; justify-content: space-between;
-  font-size: 13px; padding: 8px 12px; margin-bottom: 12px;
+  font-size: 13px; padding: 5px 12px; margin-bottom: 6px;
   border: 1px solid var(--color-dark);
 }
 
 /* ── 청력도 ── */
-.section { margin-bottom: 16px; }
-.section-title { font-size: 13px; font-weight: bold; margin-bottom: 6px; text-decoration: underline; }
+.section { margin-bottom: 8px; }
+.section-title { font-size: 13px; font-weight: bold; margin-bottom: 2px; text-decoration: underline; }
 
-.ag-wrap { display: grid; grid-template-columns: 1fr 170px; gap: 12px; align-items: stretch; }
+.ag-wrap { display: grid; grid-template-columns: 1fr 170px; gap: 8px; align-items: stretch; }
 @media (max-width: 560px) {
   .ag-wrap { grid-template-columns: 1fr; }
   .ag-graph svg { max-width: 100%; }
   .results-grid { grid-template-columns: 1fr; }
 }
 
-.ag-graph { border: 1px solid var(--color-dark); border-radius: 10px; padding: 10px; min-width: 0; }
-.ag-graph svg { width: 100%; aspect-ratio: 1/1; display: block; }
-.ag-side { display: flex; flex-direction: column; gap: 8px; border: 1px solid var(--color-dark); border-radius: 10px; padding: 10px; }
+.ag-graph { border: 1px solid var(--color-dark); border-radius: 10px; padding: 6px; min-width: 0; }
+.ag-graph svg { width: 100%; aspect-ratio: 480/428; display: block; }
+.ag-side { display: flex; flex-direction: column; gap: 4px; border: 1px solid var(--color-dark); border-radius: 10px; padding: 6px; }
 
 /* 범례 테이블 */
-.legend-tbl { width: 100%; border-collapse: collapse; font-size: 11px; margin: 10px 0; }
+.legend-tbl { width: 100%; border-collapse: collapse; font-size: 11px; margin: 4px 0; }
 .legend-tbl th,
-.legend-tbl td { padding: 3px 4px; text-align: center; }
+.legend-tbl td { padding: 2px 4px; text-align: center; }
 .legend-tbl td:first-child { text-align: center; white-space: nowrap; }
 .legend-tbl th { font-weight: bold; }
 
 /* 난청 정도 기준 테이블 */
 .deg-tbl { width: 100%; border-collapse: collapse; font-size: 11px; border-top: 1px solid var(--color-dark); border-bottom: 1px solid var(--color-dark); }
-.deg-tbl td { padding: 3px 5px; text-align: center; }
+.deg-tbl td { padding: 2px 5px; text-align: center; }
 
 /* 검사 메타 */
 .ag-meta { width: 100%; border-collapse: collapse; font-size: 11px; }
-.ag-meta td { padding: 3px 5px; text-align: center; }
+.ag-meta td { padding: 2px 5px; text-align: center; }
 .meta-lbl { font-weight: bold; }
 
 /* ── 결과 박스 ── */
-.results-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.results-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 
-.result-box { border: 2px solid; padding: 12px; border-radius: 10px; }
+.result-box { border: 2px solid; padding: 8px; border-radius: 10px; }
 .result-L   { border-color: var(--color-L); }
 .result-R   { border-color: var(--color-R); }
 
-.result-top    { display: flex; gap: 10px; align-items: center; margin-bottom: 8px; }
+.result-top    { display: flex; gap: 10px; align-items: center; margin-bottom: 4px; }
 .result-ear    { font-weight: bold; font-size: 10px; flex-shrink: 0; }
 .result-ear--L { color: var(--color-L); }
 .result-ear--R { color: var(--color-R); }
 
 .result-stats  { flex: 1; }
-.stat-row      { display: flex; justify-content: center; align-items: center; font-size: 10px; margin-bottom: 4px; gap: 6px; }
-.stat-row strong { font-size: 18px; margin-left: auto; }
+.stat-row      { display: flex; justify-content: center; align-items: center; font-size: 10px; margin-bottom: 2px; gap: 6px; }
+.stat-row strong { font-size: 16px; margin-left: auto; }
 
-.result-desc   { font-size: 11px; line-height: 1.65; border-top: 1px solid var(--color-greyLight); padding-top: 8px; margin-top: 4px; }
+.result-desc   { font-size: 11px; line-height: 1.5; border-top: 1px solid var(--color-greyLight); padding-top: 4px; margin-top: 4px; }
 
 /* ── 설문 ── */
-.survey-box  { border: 1px solid var(--color-dark); border-radius: 10px; padding: 10px; }
-.survey-text { font-size: 11px; line-height: 1.65; white-space: pre-wrap; word-break: keep-all; }
+.survey-box  { border: 1px solid var(--color-dark); border-radius: 10px; padding: 8px; }
+.survey-text { font-size: 11px; line-height: 1.5; white-space: pre-wrap; word-break: keep-all; }
 
 /* ── 푸터 ── */
 .report-footer {display: flex; justify-content: space-between; align-items: flex-end;}
 .disc { font-size: 10px; line-height: 1.8; align-self: flex-start; }
 .logo-audiso-wrap { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; margin-left: 12px; gap: 2px; }
-.logo-audiso { height: 42px; width: auto; }
+.logo-audiso { height: 40px; width: auto; }
 .logo-url    { font-size: 9px; color: var(--color-dark); }
 
 /* ── 불러오기 버튼 ── */
-.bar { position: fixed; top: 16px; right: 20px; }
+.bar { position: fixed; top: 16px; left: 50%; transform: translateX(-50%); }
 .btn { padding: 6px 18px; border: 1px solid var(--color-dark); background: var(--color-white); color: var(--color-dark); cursor: pointer; font-size: 13px; font-family: inherit; }
 .btn:hover { background: var(--color-dark); color: var(--color-white); }
