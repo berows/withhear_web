@@ -309,19 +309,15 @@ fetch('sampleData.json')
 
 function printFit() {
   const viewport = document.querySelector('meta[name="viewport"]');
-  const originalViewport = viewport.getAttribute('content');
+  const original = viewport.getAttribute('content');
   viewport.setAttribute('content', 'width=800');
 
-  setTimeout(() => {
-    const A4_H_PX = 1122;
-    const content = document.getElementById('report-content');
-    const h = content.scrollHeight;
-    const scale = h > A4_H_PX ? (A4_H_PX / h) : 1;
-    document.documentElement.style.zoom = scale;
-    window.print();
-    document.documentElement.style.zoom = '';
-    viewport.setAttribute('content', originalViewport);
-  }, 300);
+  window.addEventListener('afterprint', function restore() {
+    viewport.setAttribute('content', original);
+    window.removeEventListener('afterprint', restore);
+  });
+
+  setTimeout(() => window.print(), 500);
 }
 </script>
 </body>
