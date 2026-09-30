@@ -310,6 +310,46 @@ fetch('sampleData.json')
   .then(applyData)
   .catch(() => {});
 
+async function inlineImages(container) {
+  const cache = {};
+  const originals = [];
+
+  const toDataURI = async (src) => {
+    if (cache[src]) return cache[src];
+    const resp = await fetch(src);
+    const blob = await resp.blob();
+    const dataURI = await new Promise(res => {
+      const r = new FileReader();
+      r.onload = e => res(e.target.result);
+      r.readAsDataURL(blob);
+    });
+    cache[src] = dataURI;
+    return dataURI;
+  };
+
+  for (const el of container.querySelectorAll('img')) {
+    const src = el.getAttribute('src');
+    if (src && !src.startsWith('data:')) {
+      try {
+        originals.push({ el, attr: 'src', val: src });
+        el.setAttribute('src', await toDataURI(src));
+      } catch(e) {}
+    }
+  }
+
+  for (const el of container.querySelectorAll('svg image')) {
+    const href = el.getAttribute('href');
+    if (href && !href.startsWith('data:')) {
+      try {
+        originals.push({ el, attr: 'href', val: href });
+        el.setAttribute('href', await toDataURI(href));
+      } catch(e) {}
+    }
+  }
+
+  return () => originals.forEach(({ el, attr, val }) => el.setAttribute(attr, val));
+}
+
 async function printFit() {
   const btn = document.querySelector('.btn');
   btn.textContent = '생성 중...';
@@ -322,7 +362,9 @@ async function printFit() {
 
   try {
     const content = document.getElementById('report-content');
+    const restoreImages = await inlineImages(content);
     const canvas = await html2canvas(content, { scale: 2, useCORS: true, logging: false });
+    restoreImages();
 
     const { jsPDF } = window.jspdf;
     const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
