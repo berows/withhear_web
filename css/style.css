@@ -69,8 +69,7 @@ body {
 .result-L   { border-color: var(--color-L); }
 .result-R   { border-color: var(--color-R); }
 
-.result-top    { display: flex; flex-direction: column; gap: 2px; margin-bottom: 4px; }
-.result-ear    { font-weight: bold; font-size: 10px; flex-shrink: 0; }
+.result-ear    { font-weight: bold; font-size: 10px; margin-bottom: 4px; }
 .result-ear--L { color: var(--color-L); }
 .result-ear--R { color: var(--color-R); }
 
