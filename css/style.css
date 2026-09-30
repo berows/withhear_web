@@ -54,10 +54,10 @@ body {
 .legend-tbl th { font-weight: bold; }
 
 /* 난청 정도 기준 테이블 */
-.deg-tbl { width: 100%; border-collapse: collapse; font-size: 11px; }
+.deg-tbl { width: 100%; border-collapse: collapse; font-size: 11px; margin: 10px 0; border-top: 1px solid var(--color-greyLight); border-bottom: 1px solid var(--color-greyLight); }
 .deg-tbl td { padding: 2px 5px; text-align: center; }
 
-/* 검사 메타 */
+/* 검사 메타 테이블 */
 .ag-meta { width: 100%; border-collapse: collapse; font-size: 11px; }
 .ag-meta td { padding: 2px 5px; text-align: center; }
 .meta-lbl { font-weight: bold; }
