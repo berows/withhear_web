@@ -11,9 +11,11 @@
 <body>
 
 <div class="bar">
-  <!-- <button class="btn" onclick="printFit()">PDF 저장</button> -->
   <input type="file" id="file-input" accept=".json" style="display:none" onchange="loadFile(event)">
   <button class="btn" onclick="document.getElementById('file-input').click()">불러오기</button>
+</div>
+<div class="bar-r">
+  <button class="btn" onclick="printFit()">PDF 저장</button>
 </div>
 
 <div id="report">
