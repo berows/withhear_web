@@ -51,13 +51,10 @@ body {
 .legend-hdr,
 .legend-row  { display: flex; align-items: center; padding: 2px 0; }
 .legend-hdr  { font-weight: bold; }
-.legend-hdr span { text-align: center; }
 .legend-hdr span:first-child,
 .legend-row  span { flex: 1; white-space: nowrap; }
-.legend-hdr span:not(:first-child) { width: 16px; flex-shrink: 0; }
-.legend-hdr span:last-child,
-.legend-row  img:last-child { margin-left: 6px; }
-.legend-row  img  { width: 16px; height: 16px; flex-shrink: 0; display: block; }
+.legend-hdr span:not(:first-child),
+.legend-row  img  { width: 16px; height: 16px; flex-shrink: 0; display: block; text-align: center; }
 
 /* 난청 정도 기준 테이블 */
 .deg-tbl { width: 100%; border-collapse: collapse; font-size: 11px; padding: 10px 0; border-top: 1px solid var(--color-greyLight); border-bottom: 1px solid var(--color-greyLight); }
