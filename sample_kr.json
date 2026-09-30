@@ -1,0 +1,51 @@
+{
+  "patient": {
+    "name": "김민지",
+    "gender": "여성",
+    "dob": "1999-09-09"
+  },
+  "audiogram": {
+    "ac_L":      [null, null, null, 55, 65, 75, 80, null, null, null],
+    "ac_L_m":    [null, null, null, 50, 60, null, null, null, null, null],
+    "ac_L_nr":   [null, null, null, null, null, null, null, null, null, null],
+    "ac_L_m_nr": [null, null, null, null, null, null, null, null, null, null],
+
+    "ac_R":      [null, null, null, 35, 40, 45, 55, 60, null, null],
+    "ac_R_m":    [null, null, null, null, 35, 40, 50, null, null, null],
+    "ac_R_nr":   [null, null, null, null, null, null, null, null, null, null],
+    "ac_R_m_nr": [null, null, null, null, null, null, null, null, null, null],
+
+    "bc_L":      [null, null, null, 50, 60, 60, 50, null, null, null],
+    "bc_L_m":    [null, null, null, 45, 55, null, null, null, null, null],
+    "bc_L_nr":   [null, null, null, null, null, null, null, null, null, null],
+    "bc_L_m_nr": [null, null, null, null, null, null, null, null, null, null],
+
+    "bc_R":      [null, null, null, 55, 75, 60, 50, null, null, null],
+    "bc_R_m":    [null, null, null, null, 30, 35, 45, null, null, null],
+    "bc_R_nr":   [null, null, null, null, null, null, null, null, null, null],
+    "bc_R_m_nr": [null, null, null, null, null, null, null, null, null, null]
+  },
+  "puretonResults": {
+    "left": {
+      "acAvgThreshold": 72,
+      "bcAvgThreshold": 68,
+      "noiseScore":     69,
+      "degree":         "고도",
+      "description":    "한쪽 귀는 정상이지만 다른 쪽 귀의 청력이 저하된 상태입니다. 소리가 나는 방향을 파악하기 어렵고 주변이 시끄러울 때 대화를 놓치기 쉬우므로, 정확한 양측 청력 차이를 확인하기 위해 이비인후과 진료를 권장합니다."
+    },
+    "right": {
+      "acAvgThreshold": 51,
+      "bcAvgThreshold": 34,
+      "noiseScore":     67,
+      "degree":         "중등도",
+      "description":    "한쪽 귀는 정상이지만 다른 쪽 귀의 청력이 저하된 상태입니다. 소리가 나는 방향을 파악하기 어렵고 주변이 시끄러울 때 대화를 놓치기 쉬우므로, "
+    }
+  },
+  "survey": "청력 이상으로 인한 불편함이 중간 수준입니다.\n청력으로 인한 불편함은 주변 사람들과의 대화에서 발생하는 사회적 또는 감정적인 어려움을 동반할 수 있습니다.\n정확한 현재 청력을 파악하기 위해 가까운 이비인후과에서 청력 검사를 받고 결과 상담을 받는 것이 도움이 될 수 있습니다.\n청력 검사 결과에 따라 보청기의 착용이 권고될 수 있으며 보청기는 청력 손실로 인한 불편함을 개선하고 청력 손실의 진행을 늦출 수 있습니다.",
+  "meta": {
+    "testDate":     "2026-08-11",
+    "version":      "2.5(2980)",
+    "ambientNoise": "22 dB",
+    "testedWith":   "위드히어"
+  }
+}
