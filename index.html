@@ -10,10 +10,6 @@
 </head>
 <body>
 
-<div class="bar">
-  <input type="file" id="file-input" accept=".json" style="display:none" onchange="loadFile(event)">
-  <button class="btn" onclick="document.getElementById('file-input').click()">불러오기</button>
-</div>
 <div class="bar-c">
   <button class="btn" onclick="toggleLang()">한/En</button>
 </div>
@@ -402,7 +398,7 @@ function applyData(d) {
   renderDynamic();
 }
 
-fetch('sampleData.json')
+fetch('sample_kr.json')
   .then(r => r.json())
   .then(applyData)
   .catch(() => {});
