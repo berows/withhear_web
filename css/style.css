@@ -96,11 +96,3 @@ body {
 .btn { padding: 6px 18px; border: 1px solid var(--color-dark); background: var(--color-white); color: var(--color-dark); cursor: pointer; font-size: 14px; font-family: inherit; }
 .btn:hover { background: var(--color-dark); color: var(--color-white); }
 
-@media print {
-  @page { size: A4 portrait; margin: 0; }
-  html  { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  body  { width: 800px !important; max-width: 800px !important; padding: 8mm !important; margin: 0 !important; }
-  .ag-wrap      { grid-template-columns: 1fr 170px !important; }
-  .results-grid { grid-template-columns: 1fr 1fr !important; }
-  .bar  { display: none; }
-}

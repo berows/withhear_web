@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>청력 종합 검사 결과 보고서</title>
 <link rel="stylesheet" href="css/style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
 
@@ -307,24 +309,33 @@ fetch('sampleData.json')
   .then(applyData)
   .catch(() => {});
 
-function printFit() {
+async function printFit() {
+  const btn = document.querySelector('.btn');
+  btn.textContent = '생성 중...';
+  btn.disabled = true;
+
   const viewport = document.querySelector('meta[name="viewport"]');
   const original = viewport.getAttribute('content');
   viewport.setAttribute('content', 'width=800');
+  await new Promise(r => setTimeout(r, 400));
 
-  window.addEventListener('afterprint', function restore() {
-    document.documentElement.style.zoom = '';
+  try {
+    const content = document.getElementById('report-content');
+    const canvas = await html2canvas(content, { scale: 2, useCORS: true, logging: false });
+
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+    const margin = 8;
+    const maxW = 210 - margin * 2;
+    const maxH = 297 - margin * 2;
+    const ratio = Math.min(maxW / canvas.width, maxH / canvas.height);
+    pdf.addImage(canvas.toDataURL('image/png'), 'PNG', margin, margin, canvas.width * ratio, canvas.height * ratio);
+    pdf.save('hearing_report.pdf');
+  } finally {
     viewport.setAttribute('content', original);
-    window.removeEventListener('afterprint', restore);
-  });
-
-  setTimeout(() => {
-    const A4_H = 1063; // A4 297mm at 96dpi minus 8mm top+bottom margins
-    const h = document.getElementById('report-content').scrollHeight;
-    const scale = h > A4_H ? (A4_H / h) : 1;
-    document.documentElement.style.zoom = scale;
-    window.print();
-  }, 500);
+    btn.textContent = 'PDF 저장';
+    btn.disabled = false;
+  }
 }
 </script>
 </body>
