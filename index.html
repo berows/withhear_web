@@ -11,7 +11,9 @@
 <body>
 
 <div class="bar">
-  <button class="btn" onclick="printFit()">PDF 저장</button>
+  <!-- <button class="btn" onclick="printFit()">PDF 저장</button> -->
+  <input type="file" id="file-input" accept=".json" style="display:none" onchange="loadFile(event)">
+  <button class="btn" onclick="document.getElementById('file-input').click()">불러오기</button>
 </div>
 
 <div id="report">
@@ -360,6 +362,17 @@ async function printFit() {
     btn.textContent = 'PDF 저장';
     btn.disabled = false;
   }
+}
+
+function loadFile(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    try { applyData(JSON.parse(ev.target.result)); } catch(err) {}
+  };
+  reader.readAsText(file);
+  e.target.value = '';
 }
 </script>
 </body>
