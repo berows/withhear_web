@@ -330,7 +330,8 @@ async function printFit() {
     const maxH = 297 - margin * 2;
     const ratio = Math.min(maxW / canvas.width, maxH / canvas.height);
     pdf.addImage(canvas.toDataURL('image/png'), 'PNG', margin, margin, canvas.width * ratio, canvas.height * ratio);
-    pdf.save('hearing_report.pdf');
+    const date = (document.getElementById('m-date').textContent || new Date().toISOString().slice(0,10)).replace(/-/g, '');
+    pdf.save(`withhear_report_${date}.pdf`);
   } finally {
     viewport.setAttribute('content', original);
     btn.textContent = 'PDF 저장';
