@@ -310,15 +310,19 @@ function drawAG() {
     keys.forEach(k => { ag[k].forEach((v, i) => { if (v != null && merged[i] == null) merged[i] = v; }); });
     if (!merged.some(v => v != null)) return;
     const dashAttr = dash.length ? ` stroke-dasharray="${dash.join(' ')}"` : '';
-    for (let i = 0; i < merged.length - 1; i++) {
-      if (merged[i] == null || merged[i + 1] == null) continue;
-      const x1 = xOf(i),     y1 = yOf(merged[i]);
-      const x2 = xOf(i + 1), y2 = yOf(merged[i + 1]);
-      const dx = x2 - x1,    dy = y2 - y1;
+    for (let i = 0; i < merged.length; i++) {
+      if (merged[i] == null) continue;
+      let j = i + 1;
+      while (j < merged.length && merged[j] == null) j++;
+      if (j >= merged.length) break;
+      const x1 = xOf(i), y1 = yOf(merged[i]);
+      const x2 = xOf(j), y2 = yOf(merged[j]);
+      const dx = x2 - x1, dy = y2 - y1;
       const dist = Math.hypot(dx, dy);
-      if (dist <= half * 2) continue;
-      const ux = dx / dist,  uy = dy / dist;
-      el.push(`<line x1="${f2(x1 + ux * half)}" y1="${f2(y1 + uy * half)}" x2="${f2(x2 - ux * half)}" y2="${f2(y2 - uy * half)}" stroke="${color}" stroke-width="1.5"${dashAttr}/>`);
+      if (dist > half * 2) {
+        const ux = dx / dist, uy = dy / dist;
+        el.push(`<line x1="${f2(x1 + ux * half)}" y1="${f2(y1 + uy * half)}" x2="${f2(x2 - ux * half)}" y2="${f2(y2 - uy * half)}" stroke="${color}" stroke-width="1.5"${dashAttr}/>`);
+      }
     }
   });
 
