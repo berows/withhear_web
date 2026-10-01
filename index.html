@@ -234,22 +234,22 @@ const FREQS = [125, 250, 500, 1000, 2000, 3000, 4000, 6000, 8000, 12000];
 const FLBL  = ['','250','500','1K','2K','3K','4K','6K','8K',''];
 
 const SERIES_CFG = [
-  { key: 'ac_L',    sym: 'sym_ac_L',    dash: [],     color: '#2C6FFF' },
-  { key: 'ac_R',    sym: 'sym_ac_R',    dash: [],     color: '#D42A2A' },
-  { key: 'ac_L_m',  sym: 'sym_ac_L_m',  dash: [],     color: '#2C6FFF' },
-  { key: 'ac_R_m',  sym: 'sym_ac_R_m',  dash: [],     color: '#D42A2A' },
-  { key: 'bc_L',    sym: 'sym_bc_L',    dash: [4, 3], color: '#2C6FFF' },
-  { key: 'bc_R',    sym: 'sym_bc_R',    dash: [4, 3], color: '#D42A2A' },
-  { key: 'bc_L_m',  sym: 'sym_bc_L_m',  dash: [4, 3], color: '#2C6FFF' },
-  { key: 'bc_R_m',  sym: 'sym_bc_R_m',  dash: [4, 3], color: '#D42A2A' },
-  { key: 'ac_L_nr',   sym: 'sym_ac_L_nr',   dash: [], color: '#2C6FFF', noLine: true },
-  { key: 'ac_R_nr',   sym: 'sym_ac_R_nr',   dash: [], color: '#D42A2A', noLine: true },
-  { key: 'ac_L_m_nr', sym: 'sym_ac_L_m_nr', dash: [], color: '#2C6FFF', noLine: true },
-  { key: 'ac_R_m_nr', sym: 'sym_ac_R_m_nr', dash: [], color: '#D42A2A', noLine: true },
-  { key: 'bc_L_nr',   sym: 'sym_bc_L_nr',   dash: [], color: '#2C6FFF', noLine: true },
-  { key: 'bc_R_nr',   sym: 'sym_bc_R_nr',   dash: [], color: '#D42A2A', noLine: true },
-  { key: 'bc_L_m_nr', sym: 'sym_bc_L_m_nr', dash: [], color: '#2C6FFF', noLine: true },
-  { key: 'bc_R_m_nr', sym: 'sym_bc_R_m_nr', dash: [], color: '#D42A2A', noLine: true },
+  { key: 'ac_L',      sym: 'sym_ac_L'      },
+  { key: 'ac_R',      sym: 'sym_ac_R'      },
+  { key: 'ac_L_m',    sym: 'sym_ac_L_m'    },
+  { key: 'ac_R_m',    sym: 'sym_ac_R_m'    },
+  { key: 'bc_L',      sym: 'sym_bc_L'      },
+  { key: 'bc_R',      sym: 'sym_bc_R'      },
+  { key: 'bc_L_m',    sym: 'sym_bc_L_m'    },
+  { key: 'bc_R_m',    sym: 'sym_bc_R_m'    },
+  { key: 'ac_L_nr',   sym: 'sym_ac_L_nr'   },
+  { key: 'ac_R_nr',   sym: 'sym_ac_R_nr'   },
+  { key: 'ac_L_m_nr', sym: 'sym_ac_L_m_nr' },
+  { key: 'ac_R_m_nr', sym: 'sym_ac_R_m_nr' },
+  { key: 'bc_L_nr',   sym: 'sym_bc_L_nr'   },
+  { key: 'bc_R_nr',   sym: 'sym_bc_R_nr'   },
+  { key: 'bc_L_m_nr', sym: 'sym_bc_L_m_nr' },
+  { key: 'bc_R_m_nr', sym: 'sym_bc_R_m_nr' },
 ];
 
 const ag = {};
@@ -276,8 +276,7 @@ function drawAG() {
   for (let db = MIN; db <= MAX; db += 10) {
     const y = f2(yOf(db));
     const stroke = db === 0 ? '#888' : '#ddd';
-    const sw     = 0.5;
-    el.push(`<line x1="${P.l}" y1="${y}" x2="${P.l + pw}" y2="${y}" stroke="${stroke}" stroke-width="${sw}"/>`);
+    el.push(`<line x1="${P.l}" y1="${y}" x2="${P.l + pw}" y2="${y}" stroke="${stroke}" stroke-width="0.5"/>`);
     el.push(`<text x="${P.l - 4}" y="${y}" text-anchor="end" dominant-baseline="middle" font-size="10" font-family="'Noto Sans KR', sans-serif">${db}</text>`);
   }
 
@@ -415,9 +414,6 @@ function applyData(d) {
   applyI18n();
   renderDynamic();
 }
-
-
-
 
 
 
