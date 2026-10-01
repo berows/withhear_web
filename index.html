@@ -81,6 +81,7 @@
             <div class="stat-row"><span data-i18n="stat-ac-avg">기도 평균 역치</span><strong id="l-ac-avg"></strong></div>
             <div class="stat-row"><span data-i18n="stat-bc-avg">골도 평균 역치</span><strong id="l-bc-avg"></strong></div>
             <div class="stat-row"><span data-i18n="stat-noise">소음 속 숫자 듣기</span><strong id="l-noise"></strong></div>
+            <div class="stat-row"><span data-i18n="stat-eardrum">AI 고막 검사</span><strong id="l-eardrum"></strong></div>
             <div class="stat-row"><span data-i18n="stat-degree">난청 정도</span><strong id="l-degree"></strong></div>
           </div>
           <div class="result-desc" id="l-desc"></div>
@@ -91,6 +92,7 @@
             <div class="stat-row"><span data-i18n="stat-ac-avg">기도 평균 역치</span><strong id="r-ac-avg"></strong></div>
             <div class="stat-row"><span data-i18n="stat-bc-avg">골도 평균 역치</span><strong id="r-bc-avg"></strong></div>
             <div class="stat-row"><span data-i18n="stat-noise">소음 속 숫자 듣기</span><strong id="r-noise"></strong></div>
+            <div class="stat-row"><span data-i18n="stat-eardrum">AI 고막 검사</span><strong id="r-eardrum"></strong></div>
             <div class="stat-row"><span data-i18n="stat-degree">난청 정도</span><strong id="r-degree"></strong></div>
           </div>
           <div class="result-desc" id="r-desc"></div>
@@ -156,6 +158,7 @@ const LANG = {
     'stat-ac-avg':     '기도 평균 역치',
     'stat-bc-avg':     '골도 평균 역치',
     'stat-noise':      '소음 속 숫자 듣기',
+    'stat-eardrum':    'AI 고막 검사',
     'stat-degree':     '난청 정도',
     'section-survey':  '설문 검사 결과',
     'footer-disc1':    '※ 본 검사는 의사의 진단을 대체할 수 없으며, 질병의 임상적인 모니터링, 치료 또는 완화를 목적으로 사용할 수 없습니다.',
@@ -191,6 +194,7 @@ const LANG = {
     'stat-ac-avg':     'AC PTA',
     'stat-bc-avg':     'BC PTA',
     'stat-noise':      'Digits in Noise Test',
+    'stat-eardrum':    'AI Eardrum Exam',
     'stat-degree':     'Degree of Hearing Loss',
     'section-survey':  'Questionnaire Results',
     'footer-disc1':    '※ This test cannot replace a doctors diagnosis and cannot be used for clinical monitoring, treatment, or mitigation of diseases.',
@@ -378,11 +382,13 @@ function applyData(d) {
   setUnit('l-ac-avg',  l.acAvgThreshold, 'dB');
   setUnit('l-bc-avg',  l.bcAvgThreshold, 'dB');
   setUnit('l-noise',   l.noiseScore,     '%');
+  set('l-eardrum', l.eardrum        ?? '');
   set('l-degree',  l.degree         ?? '');
   set('l-desc',    l.description    ?? '');
   setUnit('r-ac-avg',  r.acAvgThreshold, 'dB');
   setUnit('r-bc-avg',  r.bcAvgThreshold, 'dB');
   setUnit('r-noise',   r.noiseScore,     '%');
+  set('r-eardrum', r.eardrum        ?? '');
   set('r-degree',  r.degree         ?? '');
   set('r-desc',    r.description    ?? '');
 
@@ -452,8 +458,8 @@ const SAMPLE_KR = {
     "bc_R_m_nr": [null,null,null,null,null,null,null,null,null,null]
   },
   "puretonResults": {
-    "left":  { "acAvgThreshold": 72, "bcAvgThreshold": 68, "noiseScore": 69, "degree": "고도",   "description": "한쪽 귀는 정상이지만 다른 쪽 귀의 청력이 저하된 상태입니다. 소리가 나는 방향을 파악하기 어렵고 주변이 시끄러울 때 대화를 놓치기 쉬우므로, 정확한 양측 청력 차이를 확인하기 위해 이비인후과 진료를 권장합니다." },
-    "right": { "acAvgThreshold": 51, "bcAvgThreshold": 34, "noiseScore": 67, "degree": "중등도", "description": "한쪽 귀는 정상이지만 다른 쪽 귀의 청력이 저하된 상태입니다. 소리가 나는 방향을 파악하기 어렵고 주변이 시끄러울 때 대화를 놓치기 쉬우므로, " }
+    "left":  { "acAvgThreshold": 72, "bcAvgThreshold": 68, "noiseScore": 69, "eardrum": "정상",   "degree": "고도",   "description": "한쪽 귀는 정상이지만 다른 쪽 귀의 청력이 저하된 상태입니다. 소리가 나는 방향을 파악하기 어렵고 주변이 시끄러울 때 대화를 놓치기 쉬우므로, 정확한 양측 청력 차이를 확인하기 위해 이비인후과 진료를 권장합니다." },
+    "right": { "acAvgThreshold": 51, "bcAvgThreshold": 34, "noiseScore": 67, "eardrum": "비정상", "degree": "중등도", "description": "한쪽 귀는 정상이지만 다른 쪽 귀의 청력이 저하된 상태입니다. 소리가 나는 방향을 파악하기 어렵고 주변이 시끄러울 때 대화를 놓치기 쉬우므로, " }
   },
   "survey": "청력 이상으로 인한 불편함이 중간 수준입니다.\n청력으로 인한 불편함은 주변 사람들과의 대화에서 발생하는 사회적 또는 감정적인 어려움을 동반할 수 있습니다.\n정확한 현재 청력을 파악하기 위해 가까운 이비인후과에서 청력 검사를 받고 결과 상담을 받는 것이 도움이 될 수 있습니다.\n청력 검사 결과에 따라 보청기의 착용이 권고될 수 있으며 보청기는 청력 손실로 인한 불편함을 개선하고 청력 손실의 진행을 늦출 수 있습니다.",
   "meta": { "testDate": "2026-08-11", "version": "2.5(2980)", "ambientNoise": "22 dB", "testedWith": "위드히어" }
@@ -480,8 +486,8 @@ const SAMPLE_EN = {
     "bc_R_m_nr": [null,null,null,null,null,null,null,null,null,null]
   },
   "puretonResults": {
-    "left":  { "acAvgThreshold": 72, "bcAvgThreshold": 68, "noiseScore": 69, "degree": "Moderately severe", "description": "Virtually all surrounding sounds, including speech, are inaudible. It is recommended that you consult an ENT specialist to consider active hearing rehabilitation options, such as cochlear implant surgery." },
-    "right": { "acAvgThreshold": 51, "bcAvgThreshold": 34, "noiseScore": 67, "degree": "Moderately severe", "description": "Virtually all surrounding sounds, including speech, are inaudible. It is recommended that you consult an ENT specialist to consider active hearing rehabilitation options, such as cochlear implant surgery." }
+    "left":  { "acAvgThreshold": 72, "bcAvgThreshold": 68, "noiseScore": 69, "eardrum": "Normal",   "degree": "Moderately severe", "description": "Virtually all surrounding sounds, including speech, are inaudible. It is recommended that you consult an ENT specialist to consider active hearing rehabilitation options, such as cochlear implant surgery." },
+    "right": { "acAvgThreshold": 51, "bcAvgThreshold": 34, "noiseScore": 67, "eardrum": "Abnormal", "degree": "Moderately severe", "description": "Virtually all surrounding sounds, including speech, are inaudible. It is recommended that you consult an ENT specialist to consider active hearing rehabilitation options, such as cochlear implant surgery." }
   },
   "survey": "The discomfort caused by hearing issues is at a moderate level. Hearing difficulties can be accompanied by social or emotional challenges, especially when interacting with others. To accurately assess your current hearing status, it may be helpful to have a hearing test at a nearby ENT clinic and receive a consultation on the results. Depending on the hearing test results, the use of hearing aids may be recommended. Hearing aids can improve the discomfort caused by hearing loss and help slow the progression of hearing loss.",
   "meta": { "testDate": "2026-08-11", "version": "2.5(2980)", "ambientNoise": "22 dB", "testedWith": "위드히어" }

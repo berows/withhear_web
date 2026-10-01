@@ -30,6 +30,7 @@
       "acAvgThreshold": 72,
       "bcAvgThreshold": 68,
       "noiseScore":     69,
+      "eardrum":        "Normal",
       "degree":         "Moderately severe",
       "description":    "Virtually all surrounding sounds, including speech, are inaudible. It is recommended that you consult an ENT specialist to consider active hearing rehabilitation options, such as cochlear implant surgery."
     },
@@ -37,6 +38,7 @@
       "acAvgThreshold": 51,
       "bcAvgThreshold": 34,
       "noiseScore":     67,
+      "eardrum":        "Abnormal",
       "degree":         "Moderately severe",
       "description":    "Virtually all surrounding sounds, including speech, are inaudible. It is recommended that you consult an ENT specialist to consider active hearing rehabilitation options, such as cochlear implant surgery. "
     }

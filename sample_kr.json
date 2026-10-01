@@ -30,6 +30,7 @@
       "acAvgThreshold": 72,
       "bcAvgThreshold": 68,
       "noiseScore":     69,
+      "eardrum":        "정상",
       "degree":         "고도",
       "description":    "한쪽 귀는 정상이지만 다른 쪽 귀의 청력이 저하된 상태입니다. 소리가 나는 방향을 파악하기 어렵고 주변이 시끄러울 때 대화를 놓치기 쉬우므로, 정확한 양측 청력 차이를 확인하기 위해 이비인후과 진료를 권장합니다."
     },
@@ -37,6 +38,7 @@
       "acAvgThreshold": 51,
       "bcAvgThreshold": 34,
       "noiseScore":     67,
+      "eardrum":        "비정상",
       "degree":         "중등도",
       "description":    "한쪽 귀는 정상이지만 다른 쪽 귀의 청력이 저하된 상태입니다. 소리가 나는 방향을 파악하기 어렵고 주변이 시끄러울 때 대화를 놓치기 쉬우므로, "
     }
