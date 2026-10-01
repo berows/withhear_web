@@ -298,26 +298,34 @@ function drawAG() {
   const SYM_SIZE = 20;
   const half = SYM_SIZE / 2;
 
-  SERIES_CFG.forEach(({ key, sym, dash, color, noLine }) => {
+  /* 그룹별 연결선 (차폐/비차폐 합산) */
+  const LINE_GROUPS = [
+    { keys: ['ac_L', 'ac_L_m'],  color: '#2C6FFF', dash: [] },
+    { keys: ['ac_R', 'ac_R_m'],  color: '#D42A2A', dash: [] },
+    { keys: ['bc_L', 'bc_L_m'],  color: '#2C6FFF', dash: [4, 3] },
+    { keys: ['bc_R', 'bc_R_m'],  color: '#D42A2A', dash: [4, 3] },
+  ];
+  LINE_GROUPS.forEach(({ keys, color, dash }) => {
+    const merged = Array(FREQS.length).fill(null);
+    keys.forEach(k => { ag[k].forEach((v, i) => { if (v != null && merged[i] == null) merged[i] = v; }); });
+    if (!merged.some(v => v != null)) return;
+    const dashAttr = dash.length ? ` stroke-dasharray="${dash.join(' ')}"` : '';
+    for (let i = 0; i < merged.length - 1; i++) {
+      if (merged[i] == null || merged[i + 1] == null) continue;
+      const x1 = xOf(i),     y1 = yOf(merged[i]);
+      const x2 = xOf(i + 1), y2 = yOf(merged[i + 1]);
+      const dx = x2 - x1,    dy = y2 - y1;
+      const dist = Math.hypot(dx, dy);
+      if (dist <= half * 2) continue;
+      const ux = dx / dist,  uy = dy / dist;
+      el.push(`<line x1="${f2(x1 + ux * half)}" y1="${f2(y1 + uy * half)}" x2="${f2(x2 - ux * half)}" y2="${f2(y2 - uy * half)}" stroke="${color}" stroke-width="1.5"${dashAttr}/>`);
+    }
+  });
+
+  /* 심볼 */
+  SERIES_CFG.forEach(({ key, sym }) => {
     const pts = ag[key];
     if (!pts.some(v => v != null)) return;
-
-    /* 연결선 */
-    if (!noLine) {
-      const dashAttr = dash.length ? ` stroke-dasharray="${dash.join(' ')}"` : '';
-      for (let i = 0; i < pts.length - 1; i++) {
-        if (pts[i] == null || pts[i + 1] == null) continue;
-        const x1 = xOf(i),     y1 = yOf(pts[i]);
-        const x2 = xOf(i + 1), y2 = yOf(pts[i + 1]);
-        const dx = x2 - x1,    dy = y2 - y1;
-        const dist = Math.hypot(dx, dy);
-        if (dist <= half * 2) continue;
-        const ux = dx / dist,  uy = dy / dist;
-        el.push(`<line x1="${f2(x1 + ux * half)}" y1="${f2(y1 + uy * half)}" x2="${f2(x2 - ux * half)}" y2="${f2(y2 - uy * half)}" stroke="${color}" stroke-width="1.5"${dashAttr}/>`);
-      }
-    }
-
-    /* 심볼 */
     pts.forEach((v, i) => {
       if (v == null) return;
       el.push(`<image href="${IMG_DATA[sym] || 'images/' + sym + '.svg'}" x="${f2(xOf(i) - half)}" y="${f2(yOf(v) - half)}" width="${SYM_SIZE}" height="${SYM_SIZE}"/>`);
