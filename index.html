@@ -225,9 +225,11 @@ function renderDynamic() {
   }
 }
 
-function toggleLang() {
+async function toggleLang() {
   currentLang = currentLang === 'ko' ? 'en' : 'ko';
-  applyData(currentLang === 'en' ? SAMPLE_EN : SAMPLE_KR);
+  const file = currentLang === 'en' ? 'sample_en.json' : 'sample_kr.json';
+  const d = await fetch(file).then(r => r.json());
+  applyData(d);
 }
 
 const FREQS = [125, 250, 500, 1000, 2000, 3000, 4000, 6000, 8000, 12000];
@@ -445,64 +447,8 @@ function applyDataURIs() {
     if (IMG_DATA[name]) el.src = IMG_DATA[name];
   });
 }
-const SAMPLE_KR = {
-  "patient": { "name": "김민지", "gender": "여성", "dob": "1999-09-09" },
-  "audiogram": {
-    "ac_L":      [null,null,null,null,90,80,85,null,null,null],
-    "ac_L_m":    [null,95,110,110,null,null,null,null,null,null],
-    "ac_L_nr":   [null,null,null,null,null,null,null,null,90,null],
-    "ac_L_m_nr": [null,null,null,null,null,null,null,null,null,null],
-    "ac_R":      [null,null,80,80,85,85,80,null,85,null],
-    "ac_R_m":    [null,85,null,null,null,null,null,null,null,null],
-    "ac_R_nr":   [null,null,null,null,null,null,null,null,null,null],
-    "ac_R_m_nr": [null,null,null,null,null,null,null,null,null,null],
-    "bc_L":      [null,null,null,null,null,null,null,null,null,null],
-    "bc_L_m":    [null,25,50,55,85,70,50,null,null,null],
-    "bc_L_nr":   [null,null,null,null,null,null,null,null,null,null],
-    "bc_L_m_nr": [null,null,null,null,null,null,null,null,null,null],
-    "bc_R":      [null,null,null,null,null,null,null,null,null,null],
-    "bc_R_m":    [null,25,50,50,70,70,50,null,null,null],
-    "bc_R_nr":   [null,null,null,null,null,null,null,null,null,null],
-    "bc_R_m_nr": [null,null,null,null,null,null,null,null,null,null]
-  },
-  "puretonResults": {
-    "left":  { "acAvgThreshold": 72, "bcAvgThreshold": 68, "noiseScore": 69, "eardrum": "정상",   "degree": "고도",   "description": "한쪽 귀는 정상이지만 다른 쪽 귀의 청력이 저하된 상태입니다. 소리가 나는 방향을 파악하기 어렵고 주변이 시끄러울 때 대화를 놓치기 쉬우므로, 정확한 양측 청력 차이를 확인하기 위해 이비인후과 진료를 권장합니다." },
-    "right": { "acAvgThreshold": 51, "bcAvgThreshold": 34, "noiseScore": 67, "eardrum": "비정상", "degree": "중등도", "description": "한쪽 귀는 정상이지만 다른 쪽 귀의 청력이 저하된 상태입니다. 소리가 나는 방향을 파악하기 어렵고 주변이 시끄러울 때 대화를 놓치기 쉬우므로, " }
-  },
-  "survey": "청력 이상으로 인한 불편함이 중간 수준입니다.\n청력으로 인한 불편함은 주변 사람들과의 대화에서 발생하는 사회적 또는 감정적인 어려움을 동반할 수 있습니다.\n정확한 현재 청력을 파악하기 위해 가까운 이비인후과에서 청력 검사를 받고 결과 상담을 받는 것이 도움이 될 수 있습니다.\n청력 검사 결과에 따라 보청기의 착용이 권고될 수 있으며 보청기는 청력 손실로 인한 불편함을 개선하고 청력 손실의 진행을 늦출 수 있습니다.",
-  "meta": { "testDate": "2026-08-11", "version": "2.5(2980)", "ambientNoise": "22 dB", "testedWith": "위드히어" }
-};
-
-const SAMPLE_EN = {
-  "patient": { "name": "Jonathan Doit", "gender": "Female", "dob": "1999-09-09" },
-  "audiogram": {
-    "ac_L":      [null,null,null,null,90,80,85,null,null,null],
-    "ac_L_m":    [null,95,110,110,null,null,null,null,null,null],
-    "ac_L_nr":   [null,null,null,null,null,null,null,null,90,null],
-    "ac_L_m_nr": [null,null,null,null,null,null,null,null,null,null],
-    "ac_R":      [null,null,80,80,85,85,80,null,85,null],
-    "ac_R_m":    [null,85,null,null,null,null,null,null,null,null],
-    "ac_R_nr":   [null,null,null,null,null,null,null,null,null,null],
-    "ac_R_m_nr": [null,null,null,null,null,null,null,null,null,null],
-    "bc_L":      [null,null,null,null,null,null,null,null,null,null],
-    "bc_L_m":    [null,25,50,55,85,70,50,null,null,null],
-    "bc_L_nr":   [null,null,null,null,null,null,null,null,null,null],
-    "bc_L_m_nr": [null,null,null,null,null,null,null,null,null,null],
-    "bc_R":      [null,null,null,null,null,null,null,null,null,null],
-    "bc_R_m":    [null,25,50,50,70,70,50,null,null,null],
-    "bc_R_nr":   [null,null,null,null,null,null,null,null,null,null],
-    "bc_R_m_nr": [null,null,null,null,null,null,null,null,null,null]
-  },
-  "puretonResults": {
-    "left":  { "acAvgThreshold": 72, "bcAvgThreshold": 68, "noiseScore": 69, "eardrum": "Normal",   "degree": "Moderately severe", "description": "Virtually all surrounding sounds, including speech, are inaudible. It is recommended that you consult an ENT specialist to consider active hearing rehabilitation options, such as cochlear implant surgery." },
-    "right": { "acAvgThreshold": 51, "bcAvgThreshold": 34, "noiseScore": 67, "eardrum": "Abnormal", "degree": "Moderately severe", "description": "Virtually all surrounding sounds, including speech, are inaudible. It is recommended that you consult an ENT specialist to consider active hearing rehabilitation options, such as cochlear implant surgery." }
-  },
-  "survey": "The discomfort caused by hearing issues is at a moderate level. Hearing difficulties can be accompanied by social or emotional challenges, especially when interacting with others. To accurately assess your current hearing status, it may be helpful to have a hearing test at a nearby ENT clinic and receive a consultation on the results. Depending on the hearing test results, the use of hearing aids may be recommended. Hearing aids can improve the discomfort caused by hearing loss and help slow the progression of hearing loss.",
-  "meta": { "testDate": "2026-08-11", "version": "2.5(2980)", "ambientNoise": "22 dB", "testedWith": "위드히어" }
-};
-
 applyDataURIs();
-applyData(SAMPLE_KR);
+fetch('sample_kr.json').then(r => r.json()).then(applyData);
 
 async function printFit() {
   const btn = document.getElementById('pdf-btn');
